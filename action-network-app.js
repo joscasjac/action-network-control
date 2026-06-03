@@ -230,6 +230,17 @@
     textWrap?.classList.toggle("hidden", isTeam);
   }
 
+  function renderGameSelect(slotId) {
+    const slot = state.slots[slotId];
+    const select = document.querySelector(
+      `select[data-slot="${slotId}"][data-field="gameId"]`
+    );
+    if (!select || !slot) return;
+    const current = select.value;
+    select.innerHTML = gameOptionsHtml(slotId, slot.gameId, slot.filter);
+    if (current) select.value = current;
+  }
+
   function renderTransitionTeamSelect() {
     const select = document.getElementById("transition-team");
     if (!select) return;
@@ -289,7 +300,7 @@
       const handler = () => {
         state.slots[slotId][field] = el.value;
         if (field === "filter") {
-          render();
+          renderGameSelect(slotId);
         }
         schedulePush();
       };
