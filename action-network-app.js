@@ -49,12 +49,6 @@
     }
   }
 
-  function setStatus(text, className = "") {
-    const el = document.getElementById("connection-status");
-    el.textContent = text;
-    el.className = "status " + className;
-  }
-
   function schedulePush() {
     if (!connected) return;
     clearTimeout(pushTimer);
@@ -334,15 +328,8 @@
       gamesData = await ActionNetworkPayload.getGamesData();
       teamsList = ActionNetworkPayload.buildTeamsList(gamesData);
       ensureSlots();
-      setStatus(
-        connected
-          ? `Connected — ${gamesData.length} games loaded`
-          : `Standalone — ${gamesData.length} games loaded`,
-        connected ? "connected" : "warn"
-      );
     } catch (error) {
       console.error(error);
-      setStatus(`Failed to load games: ${error.message}`, "warn");
       gamesData = [];
       teamsList = [];
       ensureSlots();
@@ -353,13 +340,10 @@
 
   client.onInitialData(() => {
     connected = true;
-    setStatus(`Connected — ${gamesData.length} games loaded`, "connected");
     schedulePush();
   });
 
-  client.onItemStateChanged((data) => {
-    setStatus(data.state === "live" ? "Live on air" : "Preview", "connected");
-  });
+  client.onItemStateChanged(() => {});
 
   loadGames();
 })();
