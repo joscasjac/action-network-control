@@ -59,7 +59,7 @@
     if (!connected) return;
     clearTimeout(pushTimer);
     pushTimer = setTimeout(() => {
-      const payload = KamwisePayload.buildCompletePayload({
+      const payload = ActionNetworkPayload.buildCompletePayload({
         gamesNumber: state.gamesNumber,
         slots: state.slots,
         gamesData,
@@ -331,8 +331,8 @@
 
   async function loadGames() {
     try {
-      gamesData = await KamwisePayload.getGamesData();
-      teamsList = KamwisePayload.buildTeamsList(gamesData);
+      gamesData = await ActionNetworkPayload.getGamesData();
+      teamsList = ActionNetworkPayload.buildTeamsList(gamesData);
       ensureSlots();
       setStatus(
         connected

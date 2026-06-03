@@ -1,5 +1,5 @@
 /**
- * Kamwise Action Network payload builder (ported from Kamwise 2023CustomHtml).
+ * Action Network payload builder.
  * Generates Singular field keys like away_team_full_name1, odds_spread_away_public1, etc.
  */
 (function (global) {
@@ -274,13 +274,7 @@
     return Object.values(games);
   }
 
-  function buildCompletePayload({
-    gamesNumber,
-    slots,
-    gamesData,
-    teamsList,
-    transitionsOptions
-  }) {
+  function buildCompletePayload({ gamesNumber, slots, gamesData, transitionsOptions }) {
     let completePayload = {};
 
     for (let slot = 1; slot <= gamesNumber; slot++) {
@@ -324,7 +318,7 @@
     return teamsList.sort((a, b) => a.id - b.id);
   }
 
-  global.KamwisePayload = {
+  global.ActionNetworkPayload = {
     PAYLOAD_FIELDS,
     cleanObject,
     generateNFLPayloadById,
